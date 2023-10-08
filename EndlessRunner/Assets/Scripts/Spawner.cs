@@ -10,8 +10,14 @@ public class Spawner : MonoBehaviour
     public GameObject[] _environmentPrefabs;
     
     public int _numberOfSpawns;
-    public float _timeBetweenSpawns;
-    public float _timeBetweenEnvironmentSpawns;
+    public float _timeBetweenSpawnsEasy;
+    public float _timeBetweenSpawnsHard;
+
+    public float _timeBetweenEnvironmentSpawnsMin;
+    public float _timeBetweenEnvironmentSpawnsMax;
+    
+    public float _timeBetweenNextDifficulty;
+
     float _nextEnvironmentSpawnTime;
     float _nextSpawnTime;
 
@@ -24,7 +30,7 @@ public class Spawner : MonoBehaviour
         _gameManager = FindObjectOfType<GameManager>();
     }
 
-    private void Update()
+    void Update()
     {
         if (Time.time > _nextSpawnTime)
         {
@@ -44,7 +50,7 @@ public class Spawner : MonoBehaviour
                 _spawnPoints.Add(_spawnPointsStart[i]);
             }
 
-            _nextSpawnTime = Time.time + _timeBetweenSpawns;
+            _nextSpawnTime = Time.time + Mathf.Lerp(_timeBetweenSpawnsEasy, _timeBetweenSpawnsHard, GetDifficultyPercent());
         }
 
         if (Time.time > _nextEnvironmentSpawnTime)
@@ -55,7 +61,12 @@ public class Spawner : MonoBehaviour
                 Instantiate(randomPrefab, _environmentSpawnPoints[i].position, _environmentSpawnPoints[i].rotation);
             }
 
-            _nextEnvironmentSpawnTime = Time.time + _timeBetweenEnvironmentSpawns;
+            _nextEnvironmentSpawnTime = Time.time + Random.Range(_timeBetweenEnvironmentSpawnsMin, _timeBetweenEnvironmentSpawnsMax);
         }
+    }
+
+    float GetDifficultyPercent()
+    {
+        return Mathf.Clamp01(Time.timeSinceLevelLoad / _timeBetweenNextDifficulty);
     }
 }
