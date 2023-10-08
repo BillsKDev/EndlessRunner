@@ -6,6 +6,13 @@ public class Player : MonoBehaviour
     public float minX;
     public float maxX;
 
+    GameManager _gameManager;
+
+    void Awake()
+    {
+        _gameManager = FindObjectOfType<GameManager>();
+    }
+
     void Update()
     {
         float inputX = Input.GetAxisRaw("Horizontal");
@@ -17,5 +24,13 @@ public class Player : MonoBehaviour
 
         if (transform.position.x < minX)
             transform.position = new Vector3(minX, transform.position.y, transform.position.z);
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "SpikeBall")
+        {
+            _gameManager.TakeDamage();
+        }
     }
 }
