@@ -15,6 +15,9 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        if (_gameManager._gameEnded == true)
+            return;
+
         float inputX = Input.GetAxisRaw("Horizontal");
 
         transform.position += Vector3.right * inputX * _speed * Time.deltaTime;

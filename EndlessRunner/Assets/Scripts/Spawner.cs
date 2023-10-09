@@ -12,7 +12,7 @@ public class Spawner : MonoBehaviour
     public int _numberOfSpawns;
     public float _timeBetweenSpawnsEasy;
     public float _timeBetweenSpawnsHard;
-
+     
     public float _timeBetweenEnvironmentSpawnsMin;
     public float _timeBetweenEnvironmentSpawnsMax;
     
@@ -32,9 +32,17 @@ public class Spawner : MonoBehaviour
 
     void Update()
     {
+        if (_gameManager._gameEnded == true)
+            return;
+
         if (Time.time > _nextSpawnTime)
         {
             _gameManager._score++;
+
+            if (_gameManager._score > PlayerPrefs.GetInt("HighScore"))
+            {
+                PlayerPrefs.SetInt("HighScore", _gameManager._score);
+            }
 
             for (int i = 0; i < _numberOfSpawns; i++)
             {
@@ -65,7 +73,7 @@ public class Spawner : MonoBehaviour
         }
     }
 
-    float GetDifficultyPercent()
+    public float GetDifficultyPercent()
     {
         return Mathf.Clamp01(Time.timeSinceLevelLoad / _timeBetweenNextDifficulty);
     }
