@@ -978,7 +978,7 @@ GameObject:
   - component: {fileID: 8356947211447032645}
   m_Layer: 0
   m_Name: PlayerCharacter1
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1040,6 +1040,7 @@ MonoBehaviour:
   _speed: 7
   minX: -4
   maxX: 4
+  _damageEffect: {fileID: 1778412096783863482, guid: 11ff92dc103f97b45b9c2a3fcc3cda76, type: 3}
 --- !u!65 &7842510261039846847
 BoxCollider:
   m_ObjectHideFlags: 0

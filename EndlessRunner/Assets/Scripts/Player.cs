@@ -6,6 +6,8 @@ public class Player : MonoBehaviour
     public float minX;
     public float maxX;
 
+    public GameObject _damageEffect;
+
     GameManager _gameManager;
 
     void Awake()
@@ -34,6 +36,8 @@ public class Player : MonoBehaviour
         if (other.tag == "SpikeBall")
         {
             _gameManager.TakeDamage();
+            Instantiate(_damageEffect, transform.position, Quaternion.identity);
+            Destroy(other.gameObject);
         }
     }
 }

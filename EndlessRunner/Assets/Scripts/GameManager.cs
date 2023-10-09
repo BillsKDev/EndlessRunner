@@ -16,9 +16,12 @@ public class GameManager : MonoBehaviour
     public TMP_Text _highScoreTextLoseScreen;
 
     public GameObject _loseScreen;
+    GameObject _player;
 
     void Start()
     {
+        _player = GameObject.FindGameObjectWithTag("Player");
+
         if (PlayerPrefs.GetInt("HighScore") <= 0)
         {
             PlayerPrefs.SetInt("HighScore", 0);
@@ -50,6 +53,7 @@ public class GameManager : MonoBehaviour
             _loseScreen.SetActive(true);
             _scoreTextLoseScreen.text = "Score: " + _score.ToString();
             _highScoreTextLoseScreen.text = "Highscore " + PlayerPrefs.GetInt("HighScore");
+            Destroy(_player);
         }
     }
 }
